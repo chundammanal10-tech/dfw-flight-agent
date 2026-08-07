@@ -1,0 +1,22 @@
+[
+    {
+        "Destination": "New Orleans (MSY)",
+        "Price": "$76 RT",
+        "Airline": "Spirit / Frontier"
+    },
+    {
+        "Destination": "Atlanta (ATL)",
+        "Price": "$56 RT",
+        "Airline": "Frontier"
+    },
+    {
+        "Destination": "Denver (DEN)",
+        "Price": "$123 RT",
+        "Airline": "American / Frontier"
+    },
+    {
+        "Destination": "Cancún (CUN)",
+        "Price": "$354 RT",
+        "Airline": "Volaris"
+    }
+]
