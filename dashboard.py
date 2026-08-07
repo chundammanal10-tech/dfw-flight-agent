@@ -262,43 +262,35 @@ with tab3:
     st.markdown("---")
     st.text_input("📝 Log a new market observation or missed deal for system tuning:", placeholder="Type notes here...")
 
-# TAB 4: NEW DESTINATION SEARCH TERMINAL (2 Weeks, 1 Month, 2 Months, 3 Months Breakdown)
+# TAB 4: PRECISION DESTINATION SEARCH TERMINAL
 with tab4:
-    st.subheader("🎯 Destination Search Terminal")
-    st.markdown("Enter any target US domestic destination below to instantly inspect predicted low-cost baseline thresholds across all four core travel windows out of DFW.")
+    st.subheader("🎯 Precision Destination Search Terminal")
+    st.markdown("Enter any city to generate **Live Search Links** pre-filtered by date-offset windows. This forces the engine to pull live, accurate market pricing.")
     
-    target_city = st.text_input("Enter Destination City or Airport Code:", placeholder="e.g., Orlando (MCO), Miami, Las Vegas...")
+    target_city = st.text_input("Enter Destination City:", placeholder="e.g., Atlanta, Orlando, Seattle...")
     
     if target_city:
-        city_clean = target_city.title()
-        st.success(f"⚡ Generating multi-window cost breakdown for DFW ➔ {city_clean}")
+        city = target_city.title()
+        st.success(f"⚡ Engineering live query strings for: {city}")
         
-        # Windows matrix breakdown
-        windows_data = [
-            {"Window": "2 Weeks Out", "Projected Floor": "$115 - $145", "Status": "🔴 Last-Minute Premium / Use Mixed-Carrier Split", "Query": f"flights from DFW to {city_clean}"},
-            {"Window": "1 Month Out", "Projected Floor": "$75 - $95", "Status": "🟢 Optimal Value Window / Strong Buy", "Query": f"flights from DFW to {city_clean}"},
-            {"Window": "2 Months Out", "Projected Floor": "$89 - $115", "Status": "🟢 Stable Baseline / Good Booking Zone", "Query": f"flights from DFW to {city_clean}"},
-            {"Window": "3 Months Out", "Projected Floor": "$120 - $150", "Status": "🟡 Advance Purchase / Lock in Before Spike", "Query": f"flights from DFW to {city_clean}"}
+        # We use standard date offsets that Google Flights interprets to show 'real' results
+        # d=14 (2 wks), d=30 (1 mo), d=60 (2 mo), d=90 (3 mo)
+        search_configs = [
+            {"label": "2 Weeks Out", "offset": 14},
+            {"label": "1 Month Out", "offset": 30},
+            {"label": "2 Months Out", "offset": 60},
+            {"label": "3 Months Out", "offset": 90}
         ]
         
-        for w in windows_data:
-            search_url = f"https://www.google.com/travel/flights?q={w['Query'].replace(' ', '%20')}"
+        for config in search_configs:
+            # We construct a deep-link that directs the user to the live engine
+            # This is the most accurate way to 'nail' the pricing without hallucinating numbers
+            url = f"https://www.google.com/travel/flights?q=Flights%20from%20DFW%20to%20{city}%20in%20{config['offset']}%20days"
+            
             st.markdown(f"""
             <div class="card">
-                <h3>📅 {w['Window']}</h3>
-                <p style="margin-bottom: 4px;"><b>Estimated Cost Floor:</b> <span style='color:#38bdf8;'>{w['Projected Floor']}</span></p>
-                <p style="margin-bottom: 8px;"><b>Strategic Status:</b> {w['Status']}</p>
-                <a class="hacker-btn" href="{search_url}" target="_blank">🔗 Live Search ({w['Window']})</a>
+                <h3>📅 {config['label']}</h3>
+                <p>Click below to open the <b>Live Pricing Matrix</b> for this specific window. The engine will reflect the absolute latest fare data.</p>
+                <a class="hacker-btn" href="{url}" target="_blank">🔗 View Live {city} Fares ({config['label']})</a>
             </div>
             """, unsafe_allow_html=True)
-    else:
-        st.info("💡 Tip: Type a city name or airport code above to render instant custom timeline breakdowns and direct engine links.")
-
-st.divider()
-
-col1, col2 = st.columns([2, 1])
-with col1:
-    st.caption("🚀 Elite Hacker Terminal v4.0 | 4-Tab Matrix Active")
-with col2:
-    if st.button("🔄 Force Refresh Terminal"):
-        st.rerun()
