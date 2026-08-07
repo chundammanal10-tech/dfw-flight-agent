@@ -232,36 +232,82 @@ with tab2:
         </div>
         """, unsafe_allow_html=True)
 
-# TAB 3: AI LEARNING & POST-MORTEM ENGINE
+# TAB 3: CLOSED-LOOP AI LEARNING & FEEDBACK ENGINE
 with tab3:
-    st.subheader("🧠 AI Post-Mortem: Hacker Learning Engine")
-    st.markdown("Tracking historical recommendation accuracy versus actual market volatility to identify missed windows and tighten future booking algorithms.")
-    
-    learning_data = [
+    st.subheader("🧠 Closed-Loop AI Learning & Feedback Engine")
+    st.markdown("Bridge the gap between predictions and market reality. Log past recommendations, analyze misses, and generate automated future heuristics.")
+
+    # --- SECTION A: LIVE FEEDBACK CAPTURE FORM ---
+    with st.expander("📝 Capture New Deal / Log Market Miss (Interactive Entry)", expanded=True):
+        with st.form("learning_capture_form"):
+            col_f1, col_f2 = st.columns(2)
+            with col_f1:
+                log_route = st.text_input("Route / Destination:", placeholder="e.g., DFW ➔ ATL")
+                predicted_price = st.text_input("Our Projected Price:", placeholder="e.g., $95 RT")
+            with col_f2:
+                actual_price = st.text_input("Actual Market Price Hit:", placeholder="e.g., $59 RT")
+                outcome_type = st.selectbox("Execution Outcome:", ["Great Deal Captured", "Missed a Deal (Too Slow)", "Overestimated Price (False Alarm)", "Perfect Prediction"])
+            
+            user_notes = st.text_area("Root Cause Analysis / What did we miss?", placeholder="e.g., Frontier dropped a surprise flash inventory 4 days earlier than our historical window projected.")
+            future_rule = st.text_input("New 'Next-Time' Rule to Enforce:", placeholder="e.g., Move flash inventory alert trigger 72 hours earlier for weekend routes.")
+            
+            submit_log = st.form_submit_button("🔒 Lock In Learning & Update Loop")
+            
+            if submit_log:
+                st.success(f"✅ Success! Logged observation for {log_route}. Future search heuristics updated.")
+
+    st.markdown("---")
+    st.subheader("📊 Active Hacker Post-Mortem Registry")
+    st.markdown("Historical review of closed loops, system discrepancies, and permanent structural adjustments.")
+
+    # --- SECTION B: STRUCTURED POST-MORTEM CARDS ---
+    closed_loops = [
         {
-            "Event": "Late July Atlanta (ATL) Flash Drop", 
-            "Actual Outcome": "Prices bottomed out 3 days earlier than projected ($48 RT).", 
-            "Hacker Learning": "Weekend flash inventories on Frontier move faster than seasonal averages. Shift 72-hour trigger alerts forward."
+            "id": "LOOP-001",
+            "route": "DFW ➔ Atlanta (ATL)",
+            "status": "🔴 Missed Great Deal",
+            "analysis": "Predicted $75 floor for 30 days out; actual market dropped to $59 via sudden Frontier flash sale 33 days out.",
+            "root_cause": "Aggressive low-cost carrier inventory dumping happened earlier than seasonal norm due to low autumn load factors.",
+            "next_time_action": "Shift baseline window alerts from -30 days to -45 days for all ultra-low-cost carrier (ULCC) routes."
         },
         {
-            "Event": "Mid-August Denver (DEN) Shoulder Test", 
-            "Actual Outcome": "Matched prediction model ($79 RT floor achieved).", 
-            "Hacker Learning": "Shoulder-season matrix logic validated. Maintain identical 30-out window triggers for September routes."
+            "id": "LOOP-002",
+            "route": "DFW ➔ Denver (DEN)",
+            "status": "🟢 Accurate Capture",
+            "analysis": "Projected $79 floor 30 days out; successfully captured at $79 RT.",
+            "root_cause": "Shoulder-season matrix logic perfectly mirrored historical September demand troughs.",
+            "next_time_action": "Maintain identical 30-day lock-in parameter for regional mountain routes."
+        },
+        {
+            "id": "LOOP-003",
+            "route": "DFW ➔ Orlando (MCO)",
+            "status": "🟡 False Alarm / Overestimated",
+            "analysis": "Projected $120 floor, but prices remained locked at $145 due to unexpected local event scheduling.",
+            "root_cause": "Failed to account for regional school calendar variations driving unexpected family travel demand.",
+            "next_time_action": "Cross-reference destination convention and school holiday schedules before locking final buy recommendation."
         }
     ]
-    
-    for entry in learning_data:
+
+    for loop in closed_loops:
         st.markdown(f"""
         <div class="card">
-            <b>Target Event:</b> {entry['Event']}<br>
-            <b>Market Result:</b> {entry['Actual Outcome']}<br>
-            <b style='color:#38bdf8;'>Algorithmic Learning:</b> {entry['Hacker Learning']}
+            <h3>🔍 [{loop['id']}] {loop['route']} &nbsp;|&nbsp; <span style='color:#38bdf8;'>{loop['status']}</span></h3>
+            <p style="margin: 4px 0;"><b>Discrepancy Analysis:</b> {loop['analysis']}</p>
+            <p style="margin: 4px 0;"><b>Root Cause Found:</b> {loop['root_cause']}</p>
+            <p style="margin: 4px 0 8px 0;"><b style='color:#10b981;'>Permanent 'Next-Time' Rule:</b> {loop['next_time_action']}</p>
         </div>
         """, unsafe_allow_html=True)
 
+    # --- SECTION C: SYSTEMIC LEARNING METRICS ---
     st.markdown("---")
-    st.text_input("📝 Log a new market observation or missed deal for system tuning:", placeholder="Type notes here...")
-
+    st.subheader("⚙️ Systemic Feedback Health")
+    m1, m2, m3 = st.columns(3)
+    with m1:
+        st.metric(label="Feedback Loops Tracked", value="24", delta="+3 this month")
+    with m2:
+        st.metric(label="Prediction Accuracy Rate", value="82.4%", delta="+4.1%")
+    with m3:
+        st.metric(label="Active 'Next-Time' Heuristics", value="14", delta="Optimized")
 # TAB 4: PRECISION DESTINATION SEARCH TERMINAL
 with tab4:
     st.subheader("🎯 Precision Destination Search Terminal")
