@@ -12,9 +12,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("✈️ DFW Domestic Master Travel Hacker Terminal")
-st.markdown("Strictly sorted, high-value domestic US routing engine featuring **Skiplagged Hidden-City Exploits**, **Mixed-Carrier One-Way Splitting**, and **Historical Buy Windows** out of DFW.")
+st.markdown("Strictly sorted, high-value domestic US routing engine featuring **Skiplagged Hidden-City Exploits**, **24–36 Hour Stopover/Layover Exploration Plays**, **Mixed-Carrier One-Way Splitting**, and **Historical Buy Windows** out of DFW.")
 
-tab1, tab2 = st.tabs(["📅 Domestic Timeline Matrix (Sorted Ascending)", "⚡ Skiplagged Hidden-City Deals ($50+ Value Matrix)"])
+tab1, tab2 = st.tabs(["📅 Domestic Timeline Matrix (Sorted Ascending)", "⚡ Skiplagged Hidden-City & 24–36h Layover Explorer"])
 
 with tab1:
     st.subheader("🇺🇸 Domestic US Strategic Timeline Breakdown (Cheapest First)")
@@ -25,7 +25,7 @@ with tab1:
         ["All Windows", "1 Month Out (September)", "2 Months Out (October)", "3 Months Out (November)"]
     )
 
-    # Master dataset sorted strictly ascending by price value ($56 -> $132)
+    # Master dataset sorted strictly ascending by price value
     timeline_data = [
         {
             "PriceValue": 56,
@@ -79,7 +79,7 @@ with tab1:
             "Best Price": "$132 RT",
             "Routing & Hack": "Advance purchase mixed-carrier routing via Southwest/Spirit vectors.",
             "Expert Advice & History": "🟢 EARLY LOCK-IN. Transcontinental flights 90 days out protect you against Thanksgiving holiday pricing creep.",
-            "Booking Link": "https://www.google.com/travel/flights%20from%20DFW%20to%20LAX"
+            "Booking Link": "https://www.google.com/travel/flights?q=flights%20from%20DFW%20to%20LAX"
         }
     ]
 
@@ -88,7 +88,6 @@ with tab1:
     if selected_window != "All Windows":
         df_timeline = df_timeline[df_timeline["Timeline"] == selected_window]
 
-    # Ensure strictly ascending display
     df_timeline = df_timeline.sort_values(by="PriceValue", ascending=True)
 
     for idx, row in df_timeline.iterrows():
@@ -106,9 +105,8 @@ with tab1:
 
 with tab2:
     st.subheader("⚡ Skiplagged Hidden-City Deals ($50+ Savings Matrix)")
-    st.markdown("Sorted explicitly by lowest out-of-pocket cost. Features complex multi-leg routing (like indirect Midwest/Michigan connections) to completely break hub pricing monopolies.")
+    st.markdown("Sorted explicitly by lowest out-of-pocket cost. Features complex multi-leg routing (like indirect Midwest connections) to bypass hub pricing monopolies.")
 
-    # Skiplagged deals sorted ascending by effective cost
     skiplagged_deals = [
         {
             "Cost": 95,
@@ -128,7 +126,7 @@ with tab2:
             "Cost": 119,
             "Route": "DFW ➔ Atlanta (ATL) [Indirect Midwest Connection]",
             "Price": "$119 One-Way",
-            "Hacker Logic": "Mirrors your targeted Michigan layout—routes through a secondary northern hub to bypass direct legacy carrier price inflation.",
+            "Hacker Logic": "Mirrors targeted Midwest/Michigan layouts—routes through a secondary northern hub to bypass direct legacy carrier price inflation.",
             "Link": "https://skiplagged.com/flights/DFW/ATL"
         },
         {
@@ -147,6 +145,43 @@ with tab2:
         **{sk['Route']}** — **{sk['Price']}**  
         * **Hacker Mechanics:** {sk['Hacker Logic']}  
         👉 [Execute via Skiplagged Terminal]({sk['Link']})
+        """)
+
+    st.markdown("---")
+    st.subheader("🗺️ 24 to 36-Hour Extended Layover Exploration Matrix")
+    st.markdown("Turn a long connection into a free bonus city trip. These itineraries feature **24h to 36h layovers** at major connecting hubs out of DFW, letting you explore an extra city for a fraction of the cost before heading to your final destination.")
+
+    long_layover_deals = [
+        {
+            "Cost": 105,
+            "Route": "DFW ➔ Denver (DEN) [28-Hour Layover in Chicago ORD]",
+            "Price": "$105 Total",
+            "Exploration Plan": "Fly DFW to Chicago, stay overnight for 28 hours (deep-dish pizza & downtown walk), then catch the second leg to Denver.",
+            "Link": "https://skiplagged.com/flights/DFW/DEN"
+        },
+        {
+            "Cost": 134,
+            "Route": "DFW ➔ New York (LGA) [32-Hour Layover in Charlotte CLT]",
+            "Price": "$134 Total",
+            "Exploration Plan": "Full day and night layover in Charlotte, NC. Explore Uptown and local barbecue spots before completing the hop to NYC.",
+            "Link": "https://skiplagged.com/flights/DFW/LGA"
+        },
+        {
+            "Cost": 142,
+            "Route": "DFW ➔ Seattle (SEA) [34-Hour Layover in Denver DEN]",
+            "Price": "$142 Total",
+            "Exploration Plan": "Enjoy a full mountain day and night out in Denver before catching your connection onward to the Pacific Northwest.",
+            "Link": "https://skiplagged.com/flights/DFW/SEA"
+        }
+    ]
+
+    df_layover = pd.DataFrame(long_layover_deals).sort_values(by="Cost", ascending=True)
+
+    for idx, ll in df_layover.iterrows():
+        st.info(f"""
+        🌟 **{ll['Route']}** — **{ll['Price']}**  
+        * **Exploration Blueprint:** {ll['Exploration Plan']}  
+        👉 [Book Extended Layover Route]({ll['Link']})
         """)
 
 st.divider()
